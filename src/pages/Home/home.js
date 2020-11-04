@@ -1,24 +1,25 @@
 import React from 'react';
-import ModalExample from '../../components/Modal/Modal.js';
-import { Button } from 'reactstrap'
-import Loader from 'react-loader-spinner'
+import { Switch, Route, withRouter } from 'react-router-dom';
 import '../../App.css'
+import ModalCPF from '../../components/Home/Modal/Modal.js';
+import Login from '../../components/Home/FormLogin/FormLogin.js';
+import Cadastro from '../../components/Home/FormCadastro/FormCadastro';
+import TrocaSenha from '../../components/Home/FormTrocaSenha/FormTrocaSenha'
+import ConfirmaEmail from '../../components/Home/ConfirmaEmail/confirmaEmail'
+
+import Timer from '../../components/Timer/timer'
 
 class Home extends React.Component {
-    state = { show: false }
-    toggleModal = () => {
-        this.setState({
-            show: !this.state.show
-        })
-    }
-
     render() {
         return (
-            <div className="App">
-                <Button color='danger' onClick={() => this.toggleModal()}>Clique aqui</Button>
-                <ModalExample show={this.state.show} toggle={this.toggleModal} {...this.props}></ModalExample>
-            </div>
+            <Switch>
+                <Route exact path="/" render={() => (<div><ModalCPF {...this.props} /> <Timer hours={3} seconds={11} /></div>)} />
+                <Route exact path="/login" render={() => <Login {...this.props} />} />
+                <Route exact path="/cadastro" render={() => <Cadastro {...this.props} />} />
+                <Route exact path="/confirmarEmail" render={() => <ConfirmaEmail {...this.props} />} />
+                <Route exact path="/confirmarTrocaSenha" render={() => <TrocaSenha {...this.props}/>} />
+            </Switch>
         );
     }
 }
-export default Home;
+export default withRouter(Home);

@@ -1,13 +1,17 @@
 import React from 'react';
-import Routes from './routes';
 import { Container } from 'reactstrap'
 import './App.css'
+import Home from './pages/Home/home.js'
+import Portal from './pages/Portal/portal.js'
+// import Footer from './components/Footer/footer'
+import PortalError from './pages/Portal/portalError'
 
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      Usuario: JSON.parse(window.localStorage.getItem('Usuario')),
       showLoader: false,
       appFunc: {
         loader: show => {
@@ -50,12 +54,21 @@ export default class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Container fluid>
-          {this.renderLoader()}
-
-          <Routes showLoader={this.state.appFunc.loader} />
-
-        </Container>
+        <React.Fragment>
+          <Container fluid>
+            {this.renderLoader()}
+            {/* <Routes showLoader={this.state.appFunc.loader} /> */}
+            <Home showLoader={this.state.appFunc.loader} />
+          </Container>
+        </React.Fragment>
+        {
+          this.state.Usuario ?
+            <React.Fragment>
+              <Portal />
+            </React.Fragment>
+            : <PortalError />
+        }
+        {/* <Footer /> */}
       </React.Fragment>
     );
   }

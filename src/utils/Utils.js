@@ -186,6 +186,7 @@ module.exports = {
             }
         },
         clearCNPJ: strCNPJ => {
+            strCNPJ = strCNPJ.toString()
             try {
                 return strCNPJ
                     .replace(/\.|/g, "")
@@ -195,6 +196,7 @@ module.exports = {
             }
         },
         clearCPF: strCPF => {
+            strCPF = strCPF.toString()
             try {
                 return strCPF
                     .replace(/\.|-/g, "")

@@ -2,8 +2,8 @@ import React from 'react';
 import { Button, Input, FormGroup, Label } from 'reactstrap';
 import InputMask from 'react-input-mask'
 import axios from 'axios'
-import { getUrlAPI } from '../../utils/Environment.js'
-import { Util } from '../../utils/Utils.js'
+import { getUrlAPI } from '../../../utils/Environment.js'
+import { Util } from '../../../utils/Utils.js'
 import swal from 'sweetalert';
 
 const initFormObject = {
@@ -17,6 +17,7 @@ const initFormObject = {
 class FormLogin extends React.Component {
     constructor(props) {
         super(props);
+        if(!this.props.location.cpf) this.props.history.push('/')
         this.state = {
             loginAluno: { ...initFormObject, CPF: this.props.location.cpf },
             formErrors: { ...initFormObject }
@@ -32,6 +33,7 @@ class FormLogin extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         let loginAluno = { ...this.state.loginAluno }
+        console.log(loginAluno)
         if (loginAluno.Senha) {
             const api = getUrlAPI("Usuario", "LogarAluno")
             loginAluno.CPF = Util.clearCPF(this.state.loginAluno.CPF)
@@ -67,7 +69,6 @@ class FormLogin extends React.Component {
     }
 
     reenviarEmail = (loginAluno) => {
-        console.log(loginAluno)
         swal({
             title: "Confirme seu Email",
             text: "Seu email ainda não está confirmado, reenvie seu email e tente logar novamente",
@@ -151,6 +152,7 @@ class FormLogin extends React.Component {
                             color="primary"
                             onClick={e => this.handleSubmit(e)}
                         > Logar </Button>
+                        {/* eslint-disable-next-line */}
                         <a href="#" onClick={() => this.esqueciMinhaSenha()} style={{ float: "right" }}>Esqueceu a senha?</a>
                     </div>
                 </div>

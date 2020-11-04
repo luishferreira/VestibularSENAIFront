@@ -1,11 +1,10 @@
 import React from 'react';
 import { Modal, Button, ModalHeader, ModalBody, ModalFooter, Input } from 'reactstrap';
-import { getUrlAPI } from '../../utils/Environment.js'
+import { getUrlAPI } from '../../../utils/Environment.js'
 import axios from 'axios'
-import { Util } from '../../utils/Utils.js'
+import { Util } from '../../../utils/Utils.js'
 import InputMask from 'react-input-mask'
-// import swal from 'sweetalert';
-import { validateForm } from '../../utils/Validations.js'
+import { validateForm } from '../../../utils/Validations.js'
 
 
 
@@ -14,8 +13,15 @@ class ModalExample extends React.Component {
     super(props);
     this.state = {
       CPF: "",
-      formErrors: ""
+      formErrors: "",
+      show: false
     }
+  }
+
+  toggleModal = () => {
+    this.setState({
+      show: !this.state.show
+    })
   }
 
   handleChange = e => {
@@ -52,8 +58,9 @@ class ModalExample extends React.Component {
   render() {
     return (
       <div>
-        <Modal isOpen={this.props.show} toggle={this.props.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.props.toggle}>CPF</ModalHeader>
+        <Button color='danger' onClick={() => this.toggleModal()}>Clique aqui</Button>
+        <Modal isOpen={this.state.show} toggle={this.toggleModal} className={this.props.className}>
+          <ModalHeader toggle={this.toggleModal}>CPF</ModalHeader>
           <ModalBody>
             <Input
               value={this.state.CPF}
@@ -69,7 +76,7 @@ class ModalExample extends React.Component {
           </ModalBody>
           <ModalFooter>
             <Button color='primary' onClick={e => this.sendCPFToAPI(e)}>Confirmar</Button>{' '}
-            <Button color='secondary' onClick={this.props.toggle}>Cancelar</Button>
+            <Button color='secondary' onClick={this.toggleModal}>Cancelar</Button>
           </ModalFooter>
         </Modal>
       </div>

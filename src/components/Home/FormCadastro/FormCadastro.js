@@ -1,12 +1,12 @@
 import React from 'react';
 import './FormCadastro.css'
 import { Button, Input, FormGroup, Label } from 'reactstrap';
-import { getUrlAPI } from '../../utils/Environment.js'
+import { getUrlAPI } from '../../../utils/Environment.js'
 import axios from 'axios'
-import { Util } from '../../utils/Utils.js'
+import { Util } from '../../../utils/Utils.js'
 import InputMask from 'react-input-mask'
 import swal from 'sweetalert';
-import { validateForm } from '../../utils/Validations.js'
+import { validateForm } from '../../../utils/Validations.js'
 
 
 const initFormObject = {
@@ -21,6 +21,7 @@ const initFormObject = {
 class FormCadastro extends React.Component {
   constructor(props) {
     super(props);
+    if(!this.props.location.cpf) this.props.history.push('/')
     this.state = {
       cadastroAluno: { ...initFormObject, CPF: this.props.location.cpf },
       formErrors: { ...initFormObject }
@@ -89,13 +90,6 @@ class FormCadastro extends React.Component {
       <React.Fragment>
         <div className="auth-wrapper">
           <div className="auth-inner">
-            {/* <form>
-
-
-                <p className="forgot-password text-right">
-                    Already registered <a href="#">sign in?</a>
-                </p>
-            </form> */}
             <h3>Finalizar Cadastro</h3>
             <FormGroup>
               <Label>Nome</Label>

@@ -1,11 +1,9 @@
 import React from 'react';
 import { Button, Input, FormGroup, Label } from 'reactstrap';
-import InputMask from 'react-input-mask'
 import axios from 'axios'
-import { getUrlAPI } from '../../utils/Environment.js'
-import { Util } from '../../utils/Utils.js'
+import { getUrlAPI } from '../../../utils/Environment.js'
 import swal from 'sweetalert';
-import { validateForm } from '../../utils/Validations.js'
+import { validateForm } from '../../../utils/Validations.js'
 
 const initFormObject = {
     CPF: "",
@@ -16,8 +14,10 @@ const initFormObject = {
 class FormTrocaSenha extends React.Component {
     constructor(props) {
         super(props);
+        console.log(this.props)
+        if(!this.props.location.search) this.props.history.push('/')
         this.state = {
-            trocaSenha: { ...initFormObject, CPF: this.props.cpf },
+            trocaSenha: { ...initFormObject, CPF: this.props.location.search.replace('?','') },
             formErrors: { ...initFormObject }
         }
     }
@@ -33,7 +33,6 @@ class FormTrocaSenha extends React.Component {
         let trocaSenha = { ...this.state.trocaSenha }
         let validate = {Senha: trocaSenha.Senha, ConfirmarSenha: trocaSenha.ConfirmarSenha}
         let formErrors = validateForm(validate)
-        console.log(formErrors)
         if (!trocaSenha.Senha) {
             formErrors.Senha = "*Campo Obrigatório";
         }
